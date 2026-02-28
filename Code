@@ -184,7 +184,7 @@
       <div class="stat-item"><span class="stat-num" data-target="524">0</span><span class="stat-label">Total Members</span></div>
       <div class="stat-item"><span class="stat-num" data-target="80">0</span><span class="stat-label">Active Members</span></div>
       <div class="stat-item"><span class="stat-num" data-target="9">0</span><span class="stat-label">Competitive Teams</span></div>
-      <div class="stat-item"><span class="stat-num" data-target="2">0</span><span class="stat-label">NECC Championships</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="1">0</span><span class="stat-label">NECC Trophies</span></div>
     </div>
   </div>
 
@@ -281,11 +281,10 @@
     <div class="mission-layout">
       <div class="reveal"><div class="section-label">Our Legacy</div><h2 class="mission-heading">Proven in <em>Competition.</em></h2></div>
       <div class="mission-text reveal">
-        <p>We previously competed in the <strong>NECC (National Esports Collegiate Conference)</strong>, where we captured back-to-back championship titles in <strong>Rainbow Six Siege</strong> &mdash; two years running.</p>
-        <p>Now we carry that winning tradition into the <strong>BIG East Conference</strong>, one of the most prestigious collegiate esports conferences in the country.</p>
+        <p>We competed in the <strong>NECC (National Esports Collegiate Conference)</strong>, where our <strong>Rainbow Six Siege</strong> team earned a <strong>3rd place finish in Division 6</strong>.</p>
+        <p>Now we carry that competitive spirit into the <strong>BIG East Conference</strong>, one of the most prestigious collegiate esports conferences in the country.</p>
         <div class="badge-row">
-          <div class="badge">NECC Siege Champions &mdash; Year 1</div>
-          <div class="badge">NECC Siege Champions &mdash; Year 2</div>
+          <div class="badge">NECC Siege &mdash; 3rd Place, Division 6</div>
           <div class="badge">BIG East Conference &mdash; Active</div>
         </div>
       </div>
@@ -398,7 +397,7 @@
       apex: { title: 'Apex Legends', genre: 'Battle Royale / Hero Shooter', desc: 'A fast-paced battle royale from Respawn Entertainment where squads of Legends use unique abilities to outlast the competition. Known for its fluid movement system and high skill ceiling.', tag: 'BIG East - PlayVS Competitive' },
       overwatch: { title: 'Overwatch 2', genre: 'Hero Shooter', desc: 'Blizzard 5v5 hero shooter built around objective-focused teamplay. With a roster spanning damage, tank, and support roles, Overwatch 2 rewards communication, coordination, and game sense above all.', tag: 'BIG East - PlayVS Competitive' },
       rocketleague: { title: 'Rocket League', genre: 'Vehicular Soccer', desc: 'Rocket-powered cars playing soccer - a simple concept with an insane skill ceiling. One of the most unique esports titles in existence, with a massive collegiate and professional scene worldwide.', tag: 'BIG East - PlayVS Competitive' },
-      siege: { title: 'Rainbow Six Siege', genre: 'Tactical Shooter', desc: 'Ubisoft ultra-tactical 5v5 shooter where destructible environments and operator abilities create an unmatched strategic experience. Siege holds a special place in MU Esports history - we won back-to-back NECC Championships in this title.', tag: '2x NECC Champions - BIG East - PlayVS' },
+      siege: { title: 'Rainbow Six Siege', genre: 'Tactical Shooter', desc: 'Ubisoft ultra-tactical 5v5 shooter where destructible environments and operator abilities create an unmatched strategic experience. Siege holds a special place in MU Esports history - our team earned a 3rd place finish in NECC Division 6.', tag: 'NECC 3rd Place, Div. 6 - BIG East - PlayVS' },
       smash: { title: 'Super Smash Bros Ultimate', genre: 'Platform Fighter', desc: 'Nintendo beloved crossover platform fighter featuring iconic characters from across gaming history. Played both at our competitive level and our monthly LAN party tournaments.', tag: 'BIG East - PlayVS Competitive' },
       marvel: { title: 'Marvel Rivals', genre: 'Hero Shooter', desc: 'NetEase 6v6 hero shooter set in the Marvel universe with a huge roster of Marvel characters. Marvel Rivals burst onto the esports scene and has quickly become one of our newest and most exciting offerings.', tag: 'BIG East - PlayVS Competitive' }
     };
