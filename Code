@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Marquette Esports</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root { --gold: #FFCC00; --blue: #003087; --dark: #0a0a0f; --mid: #111622; --light: #e8eaf0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--light); font-family: Barlow, sans-serif; overflow-x: hidden; }
+    body::before { content: ""; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px); pointer-events: none; z-index: 100; }
+
+    .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 0 2.5rem; transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s; }
+    .navbar.scrolled { background: rgba(10,10,15,0.95); backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(255,204,0,0.12); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; line-height: 1; }
+    .nav-logo-mu { font-family: "Bebas Neue", sans-serif; font-size: 1.6rem; color: white; letter-spacing: 0.06em; }
+    .nav-logo-divider { width: 1px; height: 20px; background: rgba(255,204,0,0.4); margin: 0 0.75rem; }
+    .nav-logo-esports { font-family: Barlow, sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a { color: rgba(232,234,240,0.6); text-decoration: none; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.2s; padding: 0 1rem; }
+    .nav-links a:hover, .nav-links a.active { color: white; }
+    .nav-cta { background: var(--gold) !important; color: var(--dark) !important; padding: 0.5rem 1.4rem !important; font-weight: 700 !important; letter-spacing: 0.15em !important; margin-left: 0.5rem; }
+    .nav-cta:hover { background: white !important; color: var(--dark) !important; }
+    @media (max-width: 700px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: calc(68px + 4rem) 2rem 4rem; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 60% 50%, rgba(0,48,135,0.55) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,204,0,0.12) 0%, transparent 60%), var(--dark); }
+    .hero-bg::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,204,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,204,0,0.06) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 80%); }
+    .hero-content { position: relative; max-width: 900px; text-align: center; z-index: 1; }
+    .eyebrow { display: inline-block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(255,204,0,0.4); padding: 0.35rem 1rem; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.6s 0.3s forwards; }
+    .hero h1 { font-family: "Bebas Neue", sans-serif; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.9; letter-spacing: 0.02em; color: white; opacity: 0; animation: fadeUp 0.7s 0.5s forwards; }
+    .hero h1 span { color: var(--gold); display: block; }
+    .hero-tagline { margin-top: 1.5rem; font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(232,234,240,0.7); line-height: 1.6; max-width: 580px; margin-left: auto; margin-right: auto; opacity: 0; animation: fadeUp 0.7s 0.65s forwards; }
+    .hero-meta { margin-top: 1rem; font-size: 0.78rem; color: rgba(255,204,0,0.6); letter-spacing: 0.22em; text-transform: uppercase; opacity: 0; animation: fadeUp 0.7s 0.8s forwards; }
+    .scroll-hint { margin-top: 3rem; opacity: 0; animation: fadeUp 0.7s 1s forwards; }
+    .scroll-hint span { display: block; width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 0 auto; animation: pulse 2s infinite; }
+
+    .stats-strip { background: var(--blue); padding: 3rem 2rem; }
+    .stats-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item { display: flex; flex-direction: column; align-items: center; padding: 1rem 1.5rem; position: relative; }
+    .stat-item:not(:last-child)::after { content: ""; position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
+    .stat-num { font-family: "Bebas Neue", sans-serif; font-size: 3.5rem; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 0.35rem; text-align: center; }
+    @media (max-width: 600px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+
+    .section { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+    .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .divider { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(255,204,0,0.3), transparent); }
+
+    .mission-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    @media (max-width: 700px) { .mission-layout { grid-template-columns: 1fr; gap: 2rem; } }
+    .mission-heading { font-family: "Bebas Neue", sans-serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 1; color: white; }
+    .mission-heading em { font-style: normal; color: var(--gold); }
+    .mission-text p { font-size: 1.05rem; line-height: 1.8; color: rgba(232,234,240,0.8); margin-bottom: 1.2rem; }
+    .mission-text p strong { color: white; }
+    .mission-text a { color: var(--gold); text-decoration: none; }
+    .mission-text a:hover { text-decoration: underline; }
+    .founded-tag { display: inline-block; margin-top: 0.75rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,204,0,0.7); border: 1px solid rgba(255,204,0,0.2); padding: 0.3rem 0.8rem; }
+
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-header h2 { font-family: "Bebas Neue", sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); color: white; }
+    .section-header p { color: rgba(232,234,240,0.6); max-width: 560px; margin: 1rem auto 0; font-size: 1rem; line-height: 1.7; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+    .value-card { background: var(--mid); border: 1px solid rgba(255,204,0,0.1); padding: 2rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: default; }
+    .value-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .value-card:hover { border-color: rgba(255,204,0,0.4); transform: translateY(-4px); }
+    .value-card:hover::before { transform: scaleX(1); }
+    .value-number { font-family: "Bebas Neue", sans-serif; font-size: 3rem; color: rgba(255,204,0,0.12); line-height: 1; margin-bottom: 0.75rem; }
+    .value-title { font-family: "Bebas Neue", sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--gold); margin-bottom: 0.75rem; }
+    .value-desc { font-size: 0.92rem; line-height: 1.7; color: rgba(232,234,240,0.7); }
+
+    .involve-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 800px) { .involve-grid { grid-template-columns: 1fr; } }
+    .involve-card { background: var(--mid); border: 1px solid rgba(255,204,0,0.1); padding: 2.5rem; position: relative; }
+    .involve-card::before { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--gold); }
+    .involve-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+    .involve-heading { font-family: "Bebas Neue", sans-serif; font-size: clamp(1.5rem, 2.5vw, 2rem); color: white; margin-bottom: 0.75rem; line-height: 1.1; }
+    .involve-text { font-size: 0.96rem; line-height: 1.8; color: rgba(232,234,240,0.75); margin-bottom: 0.75rem; }
+    .involve-text strong { color: white; }
+    .involve-link { display: inline-block; margin-top: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(255,204,0,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
+    .involve-link:hover { border-color: var(--gold); }
+
+    .games-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .game-chip { background: var(--mid); border: 1px solid rgba(255,204,0,0.2); color: var(--light); font-family: Barlow, sans-serif; font-weight: 600; font-size: 0.88rem; letter-spacing: 0.05em; padding: 0.65rem 1.5rem; text-transform: uppercase; cursor: pointer; transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.2s; }
+    .game-chip:hover { background: var(--gold); border-color: var(--gold); color: var(--dark); transform: translateY(-3px); }
+
+    .game-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.78); z-index: 500; align-items: center; justify-content: center; padding: 2rem; }
+    .game-modal-overlay.active { display: flex; }
+    .game-modal { background: var(--mid); border: 1px solid rgba(255,204,0,0.25); border-top: 3px solid var(--gold); max-width: 480px; width: 100%; padding: 2.5rem; position: relative; animation: fadeUp 0.3s forwards; }
+    .game-modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: rgba(232,234,240,0.45); font-size: 1.4rem; cursor: pointer; transition: color 0.2s; }
+    .game-modal-close:hover { color: var(--gold); }
+    .game-modal-genre { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(232,234,240,0.4); margin-bottom: 0.5rem; }
+    .game-modal-title { font-family: "Bebas Neue", sans-serif; font-size: 2.4rem; color: var(--gold); margin-bottom: 1rem; }
+    .game-modal-desc { font-size: 0.97rem; line-height: 1.8; color: rgba(232,234,240,0.8); }
+    .game-modal-tag { display: inline-block; margin-top: 1.2rem; background: rgba(255,204,0,0.1); border: 1px solid rgba(255,204,0,0.3); color: var(--gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.35rem 0.8rem; }
+
+    .leadership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .leader-card { background: var(--mid); border: 1px solid rgba(255,204,0,0.08); padding: 1.5rem 1.2rem; text-align: center; transition: border-color 0.3s, transform 0.3s; }
+    .leader-card:hover { border-color: rgba(255,204,0,0.35); transform: translateY(-3px); }
+    .leader-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), rgba(255,204,0,0.3)); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: "Bebas Neue", sans-serif; font-size: 1.2rem; color: var(--gold); }
+    .leader-name { font-family: "Bebas Neue", sans-serif; font-size: 1.15rem; color: white; letter-spacing: 0.04em; margin-bottom: 0.25rem; }
+    .leader-role { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); opacity: 0.8; }
+
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    .info-card { background: var(--mid); border: 1px solid rgba(255,204,0,0.08); padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; transition: border-color 0.3s; }
+    .info-card:hover { border-color: rgba(255,204,0,0.25); }
+    .info-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .info-title { font-family: "Bebas Neue", sans-serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .info-text { font-size: 0.9rem; line-height: 1.7; color: rgba(232,234,240,0.7); }
+    .info-text strong { color: white; }
+    .info-text a { color: var(--gold); text-decoration: none; }
+    .info-text a:hover { text-decoration: underline; }
+
+    .badge-row { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+    .badge { display: inline-block; background: rgba(255,204,0,0.1); border: 1px solid rgba(255,204,0,0.35); color: var(--gold); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; padding: 0.45rem 1rem; width: fit-content; }
+
+    .cta-band { background: var(--blue); position: relative; overflow: hidden; padding: 5rem 2rem; text-align: center; }
+    .cta-band::before { content: "JOIN"; position: absolute; font-family: "Bebas Neue", sans-serif; font-size: 20rem; color: rgba(255,255,255,0.04); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; white-space: nowrap; }
+    .cta-band h2 { font-family: "Bebas Neue", sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); color: white; position: relative; }
+    .cta-band p { color: rgba(255,255,255,0.75); margin: 1rem auto 2rem; max-width: 500px; font-size: 1rem; line-height: 1.7; position: relative; }
+    .btn { display: inline-block; background: var(--gold); color: var(--dark); font-family: Barlow, sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.5rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .btn:hover { background: white; transform: translateY(-2px); }
+    .btn-secondary { display: inline-block; margin-left: 1rem; background: transparent; color: white; font-family: Barlow, sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.5rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.4); transition: border-color 0.2s, background 0.2s; }
+    .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.08); }
+    @media (max-width: 520px) { .btn-secondary { margin-left: 0; margin-top: 0.75rem; display: block; width: fit-content; margin: 0.75rem auto 0; } }
+
+    .socials-footer { background: var(--mid); border-top: 1px solid rgba(255,204,0,0.15); padding: 4rem 2rem 2rem; }
+    .socials-inner { max-width: 1100px; margin: 0 auto; }
+    .socials-label { font-family: "Bebas Neue", sans-serif; font-size: clamp(2rem, 4vw, 3rem); color: white; text-align: center; margin-bottom: 2.5rem; }
+    .socials-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .social-card { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; background: var(--dark); border: 1px solid rgba(255,204,0,0.1); padding: 1.5rem 1.75rem; text-decoration: none; color: var(--light); transition: border-color 0.3s, transform 0.3s, background 0.3s; min-width: 150px; text-align: center; }
+    .social-card:hover { border-color: var(--gold); transform: translateY(-4px); background: rgba(255,204,0,0.05); }
+    .social-card:hover .social-icon { color: var(--gold); }
+    .social-icon { width: 26px; height: 26px; color: rgba(232,234,240,0.45); transition: color 0.3s; }
+    .social-platform { font-family: "Bebas Neue", sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: white; }
+    .social-handle { font-size: 0.72rem; color: rgba(232,234,240,0.45); }
+    .footer-bottom { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.75rem; color: rgba(232,234,240,0.3); letter-spacing: 0.1em; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+    .back-to-top { background: transparent; border: 1px solid rgba(255,204,0,0.25); color: rgba(255,204,0,0.6); font-family: Barlow, sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.4rem 1rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+    .back-to-top:hover { border-color: var(--gold); color: var(--gold); }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-mu">MU</span>
+        <div class="nav-logo-divider"></div>
+        <span class="nav-logo-esports">Esports</span>
+      </a>
+      <div class="nav-links">
+        <a href="#mission">Mission</a>
+        <a href="#values">Values</a>
+        <a href="#getinvolved">Get Involved</a>
+        <a href="#games">Games</a>
+        <a href="#team">Team</a>
+        <a href="https://discord.gg/xwSPDFAQ" target="_blank" class="nav-cta">Join Discord</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="eyebrow">Marquette University &nbsp;&#183;&nbsp; Est. 2015</div>
+      <h1>Level Up.<span>Together.</span></h1>
+      <p class="hero-tagline">Where competitive gaming meets community, character, and the spirit of Marquette &mdash; both on and off the screen.</p>
+      <div class="hero-meta">Milwaukee, WI &nbsp;&#183;&nbsp; BIG East Conference &nbsp;&#183;&nbsp; PlayVS</div>
+      <div class="scroll-hint"><span></span></div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item"><span class="stat-num" data-target="524">0</span><span class="stat-label">Total Members</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="80">0</span><span class="stat-label">Active Members</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="9">0</span><span class="stat-label">Competitive Teams</span></div>
+      <div class="stat-item"><span class="stat-num" data-target="2">0</span><span class="stat-label">NECC Championships</span></div>
+    </div>
+  </div>
+
+  <section id="mission" class="section">
+    <div class="mission-layout">
+      <div class="reveal">
+        <div class="section-label">Our Mission</div>
+        <h2 class="mission-heading">Built for <em>Players</em>. Driven by <em>Purpose.</em></h2>
+        <div class="founded-tag">Founded 2015 &nbsp;&#183;&nbsp; Largest Club on Campus</div>
+      </div>
+      <div class="mission-text reveal">
+        <p>Marquette Esports exists to <strong>unite students who are passionate about gaming</strong> &mdash; competitive or casual &mdash; and give them a home on campus to grow, compete, and thrive together.</p>
+        <p>We believe esports is more than winning. It is a vehicle for <strong>teamwork, leadership, and belonging</strong>. Our club creates space where every player, regardless of skill level or background, can find their team.</p>
+        <p>From organized competitive rosters to open community events, we are building a program that <strong>represents Marquette with pride</strong> &mdash; both on and off the screen.</p>
+        <p>Reach us at <a href="mailto:MUEsports@marquette.edu"><strong>MUEsports@marquette.edu</strong></a></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="values" class="section">
+    <div class="section-header reveal"><div class="section-label">What Brings Us Together</div><h2>Our Values</h2></div>
+    <div class="values-grid">
+      <div class="value-card reveal"><div class="value-number">01</div><div class="value-title">Community</div><p class="value-desc">Gaming is better with others. We foster genuine friendships and a welcoming environment for every student &mdash; from first-time players to seasoned competitors. You are not just joining a club, you are joining a family.</p></div>
+      <div class="value-card reveal"><div class="value-number">02</div><div class="value-title">Competition</div><p class="value-desc">We push each other to improve and represent Marquette at the highest level in the BIG East Conference. Whether you are grinding ranked or stepping into your first tournament, we will back your drive to be better.</p></div>
+      <div class="value-card reveal"><div class="value-number">03</div><div class="value-title">Inclusion</div><p class="value-desc">Marquette Esports is a place for everyone. We do not care about your rank, your setup, or your background &mdash; if you love games or the gaming scene, you belong here. No gatekeeping, ever.</p></div>
+      <div class="value-card reveal"><div class="value-number">04</div><div class="value-title">Marquette Spirit</div><p class="value-desc">We are Warriors on every platform &mdash; proud of our university, committed to excellence, and carrying that Golden Eagle energy into every match and every event we host.</p></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="getinvolved" class="section">
+    <div class="section-header reveal"><div class="section-label">Find Your Role</div><h2>Ways to Get Involved</h2><p>Whether you are here to compete, hang out, or tell the story &mdash; there is a place for you in Marquette Esports.</p></div>
+    <div class="involve-grid">
+      <div class="involve-card reveal">
+        <div class="involve-icon">&#127942;</div>
+        <div class="section-label">Competitive</div>
+        <h3 class="involve-heading">Compete for Marquette</h3>
+        <p class="involve-text">Try out for one of our <strong>9 competitive teams</strong> and represent Marquette in the <strong>BIG East Conference</strong> via PlayVS. We field rosters across League of Legends, Valorant, Siege, and more.</p>
+        <p class="involve-text">Dues only apply if you make a competitive roster &mdash; covering your jersey and conference fees. You must be an <strong>actively enrolled Marquette student</strong> to compete.</p>
+        <a href="https://pcl.gg/pages/members" target="_blank" class="involve-link">View our PlayVS page &rarr;</a>
+      </div>
+      <div class="involve-card reveal">
+        <div class="involve-icon">&#127918;</div>
+        <div class="section-label">Casual</div>
+        <h3 class="involve-heading">Monthly LAN Parties</h3>
+        <p class="involve-text">Every month at <strong>O'Brien Hall (Room 226AB)</strong> we host LAN parties &mdash; pizza, good vibes, and everyone's favorite games. No tryouts, no pressure.</p>
+        <p class="involve-text">We also run <strong>in-house tournaments</strong> featuring crowd favorites like <strong>Mario Kart</strong> and <strong>Super Smash Bros</strong>. Alumni are welcome to come back for LANs too!</p>
+        <a href="https://club.fusionfamily.com/@/muclubsports/1651e6b5-66b0-4ccd-a123-966e2b6f03bd" target="_blank" class="involve-link">Join on Club Fusion &rarr;</a>
+      </div>
+      <div class="involve-card reveal">
+        <div class="involve-icon">&#127897;</div>
+        <div class="section-label">Broadcasting</div>
+        <h3 class="involve-heading">Cast &amp; Stream Our Games</h3>
+        <p class="involve-text">Not a player? No problem. We are always looking for passionate <strong>gamecasters and streamers</strong> to cover our competitive matches and grow our Twitch and YouTube presence.</p>
+        <p class="involve-text">If you have a voice, an eye for the game, or a passion for content creation &mdash; <strong>there is a real role here for you</strong>, no controller required.</p>
+        <a href="mailto:MUEsports@marquette.edu" class="involve-link">Get in touch &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="games" class="section">
+    <div class="section-header reveal"><div class="section-label">Competitive Play</div><h2>Our 9 Competitive Teams</h2><p>Click any game to learn more. We compete in the <strong style="color:white;">BIG East Conference</strong> via <strong style="color:white;">PlayVS</strong>.</p></div>
+    <div class="games-grid reveal">
+      <div class="game-chip" data-game="valorant">Valorant</div>
+      <div class="game-chip" data-game="league">League of Legends</div>
+      <div class="game-chip" data-game="fortnite">Fortnite</div>
+      <div class="game-chip" data-game="apex">Apex Legends</div>
+      <div class="game-chip" data-game="overwatch">Overwatch 2</div>
+      <div class="game-chip" data-game="rocketleague">Rocket League</div>
+      <div class="game-chip" data-game="siege">Rainbow Six Siege</div>
+      <div class="game-chip" data-game="smash">Super Smash Bros</div>
+      <div class="game-chip" data-game="marvel">Marvel Rivals</div>
+    </div>
+  </section>
+
+  <div class="game-modal-overlay" id="gameModal">
+    <div class="game-modal">
+      <button class="game-modal-close" id="modalClose">&times;</button>
+      <div class="game-modal-genre" id="modalGenre"></div>
+      <div class="game-modal-title" id="modalTitle"></div>
+      <p class="game-modal-desc" id="modalDesc"></p>
+      <div class="game-modal-tag" id="modalTag"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="mission-layout">
+      <div class="reveal"><div class="section-label">Our Legacy</div><h2 class="mission-heading">Proven in <em>Competition.</em></h2></div>
+      <div class="mission-text reveal">
+        <p>We previously competed in the <strong>NECC (National Esports Collegiate Conference)</strong>, where we captured back-to-back championship titles in <strong>Rainbow Six Siege</strong> &mdash; two years running.</p>
+        <p>Now we carry that winning tradition into the <strong>BIG East Conference</strong>, one of the most prestigious collegiate esports conferences in the country.</p>
+        <div class="badge-row">
+          <div class="badge">NECC Siege Champions &mdash; Year 1</div>
+          <div class="badge">NECC Siege Champions &mdash; Year 2</div>
+          <div class="badge">BIG East Conference &mdash; Active</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="team" class="section">
+    <div class="section-header reveal"><div class="section-label">The People Behind It</div><h2>Meet the Team</h2></div>
+    <div class="leadership-grid">
+      <div class="leader-card reveal"><div class="leader-avatar">IS</div><div class="leader-name">Isaac Schrag</div><div class="leader-role">President</div></div>
+      <div class="leader-card reveal"><div class="leader-avatar">BK</div><div class="leader-name">Blake Klemenhagen</div><div class="leader-role">Vice President</div></div>
+      <div class="leader-card reveal"><div class="leader-avatar">RU</div><div class="leader-name">Ryan Utz</div><div class="leader-role">Competitive Teams Manager</div></div>
+      <div class="leader-card reveal"><div class="leader-avatar">MC</div><div class="leader-name">Max Carrel</div><div class="leader-role">Secretary</div></div>
+      <div class="leader-card reveal"><div class="leader-avatar">MM</div><div class="leader-name">Matthew McGue</div><div class="leader-role">Treasurer</div></div>
+      <div class="leader-card reveal"><div class="leader-avatar">AV</div><div class="leader-name">Anthony Vitaioli</div><div class="leader-role">Socials Manager</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section">
+    <div class="section-header reveal"><div class="section-label">Good to Know</div><h2>Club Info</h2></div>
+    <div class="info-grid reveal">
+      <div class="info-card"><div class="info-icon">&#128205;</div><div><div class="info-title">Where We Meet</div><p class="info-text"><strong>O'Brien Hall, Room 226AB</strong> &mdash; once or twice a month on weekends for LAN parties and tournaments.</p></div></div>
+      <div class="info-card"><div class="info-icon">&#127891;</div><div><div class="info-title">Who Can Join</div><p class="info-text">Open to <strong>all Marquette students</strong> &mdash; undergrad and grad. Alumni are always welcome at LAN parties!</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128176;</div><div><div class="info-title">Dues</div><p class="info-text">Casual membership is <strong>free</strong>. Dues only apply if you make a competitive roster &mdash; covering your jersey and conference fees.</p></div></div>
+      <div class="info-card"><div class="info-icon">&#128231;</div><div><div class="info-title">Contact Us</div><p class="info-text"><a href="mailto:MUEsports@marquette.edu"><strong>MUEsports@marquette.edu</strong></a></p></div></div>
+      <div class="info-card"><div class="info-icon">&#128279;</div><div><div class="info-title">Club Fusion</div><p class="info-text">Join officially via Marquette's student org platform. <a href="https://club.fusionfamily.com/@/muclubsports/1651e6b5-66b0-4ccd-a123-966e2b6f03bd" target="_blank"><strong>View our page &rarr;</strong></a></p></div></div>
+      <div class="info-card"><div class="info-icon">&#127999;</div><div><div class="info-title">Conference</div><p class="info-text">Competing in the <strong>BIG East Conference</strong> via <strong>PlayVS</strong>. <a href="https://pcl.gg/pages/members" target="_blank">View our PlayVS page &rarr;</a></p></div></div>
+    </div>
+  </section>
+
+  <div class="cta-band reveal">
+    <h2>Ready to Join the Roster?</h2>
+    <p>Whether you are grinding ranked, coming for the LAN parties, or looking to cast your first match &mdash; Marquette Esports has a place for you.</p>
+    <a href="https://discord.gg/xwSPDFAQ" target="_blank" rel="noopener noreferrer" class="btn">Join our Discord &rarr;</a>
+    <a href="https://club.fusionfamily.com/@/muclubsports/1651e6b5-66b0-4ccd-a123-966e2b6f03bd" target="_blank" rel="noopener noreferrer" class="btn-secondary">Club Fusion</a>
+  </div>
+
+  <footer class="socials-footer">
+    <div class="socials-inner">
+      <div class="socials-label reveal">Follow the Team</div>
+      <div class="socials-grid reveal">
+        <a href="https://www.instagram.com/maarquette_esports" target="_blank" rel="noopener noreferrer" class="social-card">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          <div class="social-platform">Instagram</div><div class="social-handle">@maarquette_esports</div>
+        </a>
+        <a href="https://x.com/MARQ_Esports" target="_blank" rel="noopener noreferrer" class="social-card">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <div class="social-platform">X (Twitter)</div><div class="social-handle">@MARQ_Esports</div>
+        </a>
+        <a href="https://www.youtube.com/@marquettegamingandesports7760" target="_blank" rel="noopener noreferrer" class="social-card">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <div class="social-platform">YouTube</div><div class="social-handle">Marquette Gaming &amp; Esports</div>
+        </a>
+        <a href="https://www.twitch.tv/MarquetteGamingAndEsports" target="_blank" rel="noopener noreferrer" class="social-card">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+          <div class="social-platform">Twitch</div><div class="social-handle">MarquetteGamingAndEsports</div>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&#169; 2026 Marquette Esports Club &nbsp;&#183;&nbsp; Milwaukee, WI &nbsp;&#183;&nbsp; <a href="mailto:MUEsports@marquette.edu" style="color:inherit;">MUEsports@marquette.edu</a></span>
+      <button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593; Back to Top</button>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', function() { navbar.classList.toggle('scrolled', window.scrollY > 40); });
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+    window.addEventListener('scroll', function() {
+      var current = '';
+      sections.forEach(function(sec) { if (window.scrollY >= sec.offsetTop - 120) current = sec.id; });
+      navLinks.forEach(function(a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+    });
+
+    var revealEls = document.querySelectorAll('.reveal');
+    var revealObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e, i) {
+        if (e.isIntersecting) { setTimeout(function() { e.target.classList.add('visible'); }, i * 80); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(function(el) { revealObs.observe(el); });
+
+    var counters = document.querySelectorAll('.stat-num');
+    var cntObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target, target = parseInt(el.dataset.target);
+        var cur = 0, steps = 60, duration = 1400, inc = target / steps;
+        var timer = setInterval(function() {
+          cur += inc;
+          if (cur >= target) { cur = target; clearInterval(timer); }
+          el.textContent = Math.floor(cur);
+        }, duration / steps);
+        cntObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function(c) { cntObs.observe(c); });
+
+    var gameData = {
+      valorant: { title: 'Valorant', genre: 'Tactical Shooter', desc: 'A 5v5 character-based tactical shooter from Riot Games. Teams alternate attacking and defending, with each round shaped by precise aim, Agent abilities, and team strategy. Currently one of the most dominant titles in collegiate and professional esports.', tag: 'BIG East - PlayVS Competitive' },
+      league: { title: 'League of Legends', genre: 'MOBA', desc: 'The most played PC game on the planet. Two teams of five champions battle to destroy the enemy Nexus. With hundreds of champions and deep strategic layers, LoL has anchored collegiate esports for over a decade.', tag: 'BIG East - PlayVS Competitive' },
+      fortnite: { title: 'Fortnite', genre: 'Battle Royale', desc: 'Epic Games massively popular battle royale where 100 players fight to be the last one standing. Its unique building mechanics, constant seasonal updates, and enormous cultural footprint make it one of the most-played games worldwide.', tag: 'BIG East - PlayVS Competitive' },
+      apex: { title: 'Apex Legends', genre: 'Battle Royale / Hero Shooter', desc: 'A fast-paced battle royale from Respawn Entertainment where squads of Legends use unique abilities to outlast the competition. Known for its fluid movement system and high skill ceiling.', tag: 'BIG East - PlayVS Competitive' },
+      overwatch: { title: 'Overwatch 2', genre: 'Hero Shooter', desc: 'Blizzard 5v5 hero shooter built around objective-focused teamplay. With a roster spanning damage, tank, and support roles, Overwatch 2 rewards communication, coordination, and game sense above all.', tag: 'BIG East - PlayVS Competitive' },
+      rocketleague: { title: 'Rocket League', genre: 'Vehicular Soccer', desc: 'Rocket-powered cars playing soccer - a simple concept with an insane skill ceiling. One of the most unique esports titles in existence, with a massive collegiate and professional scene worldwide.', tag: 'BIG East - PlayVS Competitive' },
+      siege: { title: 'Rainbow Six Siege', genre: 'Tactical Shooter', desc: 'Ubisoft ultra-tactical 5v5 shooter where destructible environments and operator abilities create an unmatched strategic experience. Siege holds a special place in MU Esports history - we won back-to-back NECC Championships in this title.', tag: '2x NECC Champions - BIG East - PlayVS' },
+      smash: { title: 'Super Smash Bros Ultimate', genre: 'Platform Fighter', desc: 'Nintendo beloved crossover platform fighter featuring iconic characters from across gaming history. Played both at our competitive level and our monthly LAN party tournaments.', tag: 'BIG East - PlayVS Competitive' },
+      marvel: { title: 'Marvel Rivals', genre: 'Hero Shooter', desc: 'NetEase 6v6 hero shooter set in the Marvel universe with a huge roster of Marvel characters. Marvel Rivals burst onto the esports scene and has quickly become one of our newest and most exciting offerings.', tag: 'BIG East - PlayVS Competitive' }
+    };
+
+    var modal = document.getElementById('gameModal');
+    document.querySelectorAll('.game-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
+        var d = gameData[chip.dataset.game];
+        if (!d) return;
+        document.getElementById('modalGenre').textContent = d.genre;
+        document.getElementById('modalTitle').textContent = d.title;
+        document.getElementById('modalDesc').textContent = d.desc;
+        document.getElementById('modalTag').textContent = d.tag;
+        modal.classList.add('active');
+      });
+    });
+    document.getElementById('modalClose').addEventListener('click', function() { modal.classList.remove('active'); });
+    modal.addEventListener('click', function(e) { if (e.target === modal) modal.classList.remove('active'); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') modal.classList.remove('active'); });
+  </script>
+
+</body>
+</html>
